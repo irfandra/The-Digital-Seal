@@ -1,0 +1,28 @@
+package com.digitalseal.dto.request;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+
+@Data
+@Schema(description = "Email registration request payload")
+public class EmailRegisterRequest {
+    
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    @Schema(description = "User's email address", example = "john.doe@example.com", required = true)
+    private String email;
+    
+    @NotBlank(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    @Pattern(
+        regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$",
+        message = "Password must contain uppercase, lowercase, number and special character"
+    )
+    @Schema(description = "User's password (min 8 chars, must include uppercase, lowercase, number, and special character)", 
+            example = "SecurePass123!", required = true)
+    private String password;
+}
