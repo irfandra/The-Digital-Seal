@@ -41,6 +41,7 @@ public class AuthService {
     private final RefreshTokenService refreshTokenService;
     private final EmailService emailService;
     private final VerificationService verificationService;
+    private final UserService userService;
     
     /**
      * Register user with email and password
@@ -81,7 +82,7 @@ public class AuthService {
                 .refreshToken(refreshToken.getToken())
                 .tokenType("Bearer")
                 .expiresIn(jwtTokenProvider.getExpirationTime())
-                .user(mapToUserResponse(savedUser))
+                .user(userService.mapToUserResponse(savedUser))
                 .build();
     }
     
@@ -129,7 +130,7 @@ public class AuthService {
                 .refreshToken(refreshToken.getToken())
                 .tokenType("Bearer")
                 .expiresIn(jwtTokenProvider.getExpirationTime())
-                .user(mapToUserResponse(user))
+                .user(userService.mapToUserResponse(user))
                 .build();
     }
     
@@ -211,7 +212,7 @@ public class AuthService {
                 .refreshToken(refreshToken.getToken())
                 .tokenType("Bearer")
                 .expiresIn(jwtTokenProvider.getExpirationTime())
-                .user(mapToUserResponse(savedUser))
+                .user(userService.mapToUserResponse(savedUser))
                 .build();
     }
     
@@ -258,7 +259,7 @@ public class AuthService {
                 .refreshToken(refreshToken.getToken())
                 .tokenType("Bearer")
                 .expiresIn(jwtTokenProvider.getExpirationTime())
-                .user(mapToUserResponse(user))
+                .user(userService.mapToUserResponse(user))
                 .build();
     }
     
@@ -378,25 +379,5 @@ public class AuthService {
         userRepository.save(user);
         
         log.info("Password reset successful for user ID: {}", user.getId());
-    }
-    
-    /**
-     * Map User entity to UserResponse DTO
-     */
-    private UserResponse mapToUserResponse(User user) {
-        return UserResponse.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .phoneNumber(user.getPhoneNumber())
-                .walletAddress(user.getWalletAddress())
-                .role(user.getRole().name())
-                .authType(user.getAuthType().name())
-                .emailVerified(user.getEmailVerified())
-                .walletVerified(user.getWalletVerified())
-                .createdAt(user.getCreatedAt())
-                .lastLoginAt(user.getLastLoginAt())
-                .build();
     }
 }

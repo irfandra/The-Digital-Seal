@@ -22,6 +22,27 @@ services:
       timeout: 5s
       retries: 5
 
+  # Hardhat Local Blockchain
+  hardhat:
+    image: node:20-alpine
+    container_name: digital-seal-hardhat
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ../blockchain:/app
+    ports:
+      - "8545:8545"
+    command: >
+      sh -c "
+        npm install &&
+        npx hardhat node --hostname 0.0.0.0
+      "
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:8545', r => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))\""]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
 volumes:
   mysql_data:
     driver: local

@@ -133,7 +133,7 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
     
-    private UserResponse mapToUserResponse(User user) {
+    public UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())

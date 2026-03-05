@@ -12,8 +12,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     
     Optional<User> findByWalletAddress(String walletAddress);
     
-    Optional<User> findByEmailOrWalletAddress(String email, String walletAddress);
-    
     Boolean existsByEmail(String email);
     
     Boolean existsByWalletAddress(String walletAddress);

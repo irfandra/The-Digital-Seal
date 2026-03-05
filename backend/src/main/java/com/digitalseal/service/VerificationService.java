@@ -94,8 +94,4 @@ public class VerificationService {
     /**
      * Clean up expired codes
      */
-    @Transactional
-    public void deleteExpiredCodes() {
-        verificationCodeRepository.deleteExpiredCodes(LocalDateTime.now());
-    }
 }

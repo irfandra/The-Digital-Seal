@@ -10,6 +10,11 @@ yarn.lock
 build/
 .env
 
+# Blockchain dependencies
+blockchain/node_modules/
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
 # Android
 *.apk
 *.ap_

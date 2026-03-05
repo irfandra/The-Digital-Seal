@@ -1,0 +1,53 @@
+package com.digitalseal.dto.response;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "Collection information response")
+public class CollectionResponse {
+    
+    @Schema(description = "Collection ID", example = "1")
+    private Long id;
+    
+    @Schema(description = "Brand ID", example = "1")
+    private Long brandId;
+    
+    @Schema(description = "Brand name", example = "Louis Vuitton")
+    private String brandName;
+    
+    @Schema(description = "Collection name", example = "Spring 2026 Collection")
+    private String collectionName;
+    
+    @Schema(description = "Collection description", example = "Our exclusive spring lineup")
+    private String description;
+    
+    @Schema(description = "Collection image URL", example = "https://example.com/collection.png")
+    private String imageUrl;
+    
+    @Schema(description = "Season identifier", example = "Spring 2026")
+    private String season;
+    
+    @Schema(description = "Whether this is a limited edition", example = "false")
+    private Boolean isLimitedEdition;
+    
+    @Schema(description = "Release date", example = "2026-04-01")
+    private LocalDate releaseDate;
+    
+    @Schema(description = "Number of products in this collection", example = "5")
+    private Long productCount;
+    
+    @Schema(description = "Creation timestamp", example = "2026-03-01T10:30:00")
+    private LocalDateTime createdAt;
+    
+    @Schema(description = "Last update timestamp", example = "2026-03-01T15:45:30")
+    private LocalDateTime updatedAt;
+}

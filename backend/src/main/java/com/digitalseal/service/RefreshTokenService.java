@@ -69,19 +69,4 @@ public class RefreshTokenService {
         });
     }
     
-    /**
-     * Delete all user's refresh tokens (logout all devices)
-     */
-    @Transactional
-    public void deleteByUser(User user) {
-        refreshTokenRepository.deleteByUser(user);
-    }
-    
-    /**
-     * Clean up expired tokens (scheduled task)
-     */
-    @Transactional
-    public void deleteExpiredTokens() {
-        refreshTokenRepository.deleteExpiredTokens(LocalDateTime.now());
-    }
 }

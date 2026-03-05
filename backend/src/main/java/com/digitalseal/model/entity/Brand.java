@@ -49,6 +49,14 @@ public class Brand {
     @Builder.Default
     private Boolean verified = false;
     
+    @Builder.Default
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Collection> collections = new java.util.ArrayList<>();
+    
+    @Builder.Default
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
+    private java.util.List<Product> products = new java.util.ArrayList<>();
+    
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

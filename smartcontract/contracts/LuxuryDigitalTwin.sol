@@ -163,6 +163,17 @@ contract LuxuryDigitalTwin is ERC721URIStorage, Ownable, ReentrancyGuard {
         string memory serialNumber,
         string memory ipfsUri
     ) public onlyOwner nonReentrant returns (uint256) {
+        return _mintDigitalTwin(to, serialNumber, ipfsUri);
+    }
+
+    /**
+     * @dev Internal mint logic (no reentrancy guard — called from guarded functions).
+     */
+    function _mintDigitalTwin(
+        address to,
+        string memory serialNumber,
+        string memory ipfsUri
+    ) internal returns (uint256) {
         require(to != address(0), "LuxuryDigitalTwin: mint to zero address");
         require(bytes(serialNumber).length > 0, "LuxuryDigitalTwin: empty serial number");
         require(bytes(ipfsUri).length > 0, "LuxuryDigitalTwin: empty IPFS URI");
@@ -220,7 +231,7 @@ contract LuxuryDigitalTwin is ERC721URIStorage, Ownable, ReentrancyGuard {
         uint256[] memory tokenIds = new uint256[](recipients.length);
         
         for (uint256 i = 0; i < recipients.length; i++) {
-            tokenIds[i] = mintDigitalTwin(recipients[i], serialNumbers[i], ipfsUris[i]);
+            tokenIds[i] = _mintDigitalTwin(recipients[i], serialNumbers[i], ipfsUris[i]);
         }
         
         return tokenIds;

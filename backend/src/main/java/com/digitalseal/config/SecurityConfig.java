@@ -31,7 +31,22 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
+                // Brand public endpoints
                 .requestMatchers(HttpMethod.GET, "/brands/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/brands/*/collections", "/brands/*/collections/*").permitAll()
+                .requestMatchers(HttpMethod.GET, "/brands/*/products").permitAll()
+                // Product public endpoints
+                .requestMatchers(HttpMethod.GET, "/products/*", "/products/categories").permitAll()
+                .requestMatchers(HttpMethod.GET, "/collections/*/products").permitAll()
+                // Marketplace (all public)
+                .requestMatchers(HttpMethod.GET, "/marketplace", "/marketplace/**").permitAll()
+                // Verification (all public)
+                .requestMatchers(HttpMethod.GET, "/verify/**").permitAll()
+                // Blockchain (status and verify are public)
+                .requestMatchers(HttpMethod.GET, "/blockchain/status", "/blockchain/verify/**").permitAll()
+                // Platform logs — authenticated + @PreAuthorize(BRAND/OWNER) on controller
+                .requestMatchers("/admin/logs/**").authenticated()
+                // Infrastructure
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()

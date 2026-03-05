@@ -12,8 +12,6 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     
     List<Brand> findByUser(User user);
     
-    List<Brand> findByUserId(Long userId);
-    
     Optional<Brand> findByIdAndUser(Long id, User user);
     
     Boolean existsByBrandNameIgnoreCase(String brandName);
