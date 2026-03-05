@@ -1,41 +1,64 @@
-// Fallback for using MaterialIcons on Android and web.
-
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
+import { SymbolWeight } from 'expo-symbols';
 import { ComponentProps } from 'react';
-import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
+import { OpaqueColorValue, Platform, View, type StyleProp, type ViewStyle } from 'react-native';
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
-type IconSymbolName = keyof typeof MAPPING;
+// ✅ iOS-specific import (Metro resolves automatically)
+const IconSymbolIOS = Platform.OS === 'ios' ? require('./icon-symbol.ios').IconSymbol : null;
 
-/**
- * Add your SF Symbols to Material Icons mappings here.
- * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
- * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
- */
-const MAPPING = {
+// ✅ Types - ViewStyle for transform support
+type MaterialIconName = ComponentProps<typeof MaterialIcons>['name'];
+type IconMapping = Record<string, MaterialIconName>;
+
+const MAPPING: IconMapping = {
   'house.fill': 'home',
-  'paperplane.fill': 'send',
+  'paperplane.fill': 'send', 
+  'qr-code-scanner.fill': 'qr-code-scanner',
   'chevron.left.forwardslash.chevron.right': 'code',
   'chevron.right': 'chevron-right',
-} as IconMapping;
+};
+
+type IconSymbolName = keyof typeof MAPPING;
+
+export type IconSymbolProps = {
+  name: IconSymbolName;
+  size?: number;
+  color: string | OpaqueColorValue;
+  style?: StyleProp<ViewStyle>;  // ✅ Changed to ViewStyle
+  weight?: SymbolWeight;
+};
 
 /**
- * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
- * This ensures a consistent look across platforms, and optimal resource usage.
- * Icon `name`s are based on SF Symbols and require manual mapping to Material Icons.
+ * Cross-platform: SF Symbols (iOS), MaterialIcons (Android/Web)
  */
 export function IconSymbol({
   name,
   size = 24,
   color,
   style,
-}: {
-  name: IconSymbolName;
-  size?: number;
-  color: string | OpaqueColorValue;
-  style?: StyleProp<TextStyle>;
-  weight?: SymbolWeight;
-}) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  weight,
+}: IconSymbolProps) {
+  // ✅ iOS: Native SF Symbols
+  if (Platform.OS === 'ios' && IconSymbolIOS) {
+    return (
+      <IconSymbolIOS
+        name={name}
+        size={size}
+        color={color as string}
+        style={style}
+        weight={weight}
+      />
+    );
+  }
+
+  // ✅ Android/Web: MaterialIcons with size wrapper
+  return (
+    <View style={[{ width: size, height: size }, style]}>
+      <MaterialIcons
+        name={MAPPING[name]}
+        size={size}
+        color={color}
+      />
+    </View>
+  );
 }
