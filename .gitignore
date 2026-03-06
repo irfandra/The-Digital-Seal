@@ -41,9 +41,3 @@ app-example
 # generated native folders
 /ios
 /android
-
-# Other project directories (backend, blockchain, smartcontract live on main branch)
-backend/
-blockchain/
-smartcontract/
-logs/
