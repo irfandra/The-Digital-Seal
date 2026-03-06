@@ -15,7 +15,20 @@ blockchain/node_modules/
 blockchain/artifacts/
 blockchain/cache/
 blockchain/typechain-types/
-# Android
+
+# Expo / React Native (frontend/)
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+.kotlin/
+*.orig.*
+.metro-health-check*
+app-example
+/ios
+/android
+
+# Android build artifacts
 *.apk
 *.ap_
 *.aab
@@ -25,18 +38,9 @@ bin/
 gen/
 out/
 .gradle/
-build/
 local.properties
 *.iml
 .idea/
-*.log
-*.hprof
-
-# Android Studio
-.gradle
-.idea
-*.iml
-*.hprof
 .externalNativeBuild
 .cxx
 captures/
@@ -45,7 +49,12 @@ output.json
 
 # Keystore files
 *.jks
+*.p8
+*.p12
+*.key
 *.keystore
+*.mobileprovision
+*.pem
 
 # macOS
 .DS_Store
@@ -65,13 +74,14 @@ output.json
 # Logs
 logs/
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+*.hprof
 
 # Test coverage
 coverage/
 .nyc_output/
+
+# TypeScript
+*.tsbuildinfo
 
 # Temporary files
 *.tmp
